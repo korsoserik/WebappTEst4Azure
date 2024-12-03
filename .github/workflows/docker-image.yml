@@ -22,9 +22,10 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag ghcr.io/korsoserik/webapptest4azure:$IMAGE_TAG
+        docker build . --file Dockerfile --tag ghcr.io/korsoserik/webapptest4azure:$IMAGE_TAG --tag ghcr.io/korsoserik/webapptest4azure:latest
         docker login ghcr.io -u korsoserik -p ${{secrets.GHCR_TOKEN}}
         docker push ghcr.io/korsoserik/webapptest4azure:$IMAGE_TAG
+        docker push ghcr.io/korsoserik/webapptest4azure:latest
         
         
         
