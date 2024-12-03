@@ -2,11 +2,11 @@ name: Docker Image CI
 
 on:
   workflow_dispatch:
-  
+
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
 
@@ -15,11 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: generate image tag
+      run: |
+        echo "IMAGE_TAG=$(date +%s)" >> $GITHUB_ENV
+        
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: |
-        echo "IMG_TAG=$(date +%s)" >> $GITHUB_ENV
-        docker build . --file Dockerfile --tag ghcr.io/korsoserik/webtest4azure:$IMAGE_TAG
-        docker login ghcr.io -u korsoserik -p ${{secrets.GHCR_TOKEN}}
-        docker push ghcr.io/korsoserik/webtest4azure:$IMAGE_TAG
+        docker build . --file Dockerfile --tag ghcr.io/korsoserik/test-azure-webapp:$IMAGE_TAG
+        docker login ghcr.io -u bognarpal -p ${{secrets.GHCR_TOKEN}}
+        docker push ghcr.io/bognarpal/test-azure-webapp:$IMAGE_TAG
+        
+        
         
